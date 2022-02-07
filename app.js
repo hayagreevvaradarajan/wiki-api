@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
+require('dotenv').config({path: __dirname + '/.env'});
 
 const app = express();
 
@@ -26,6 +27,20 @@ app.get("/articles", (req, res) => {
             res.send(foundArticles);
         } else{
             res.send(err);
+        }
+    });
+});
+
+app.post("/articles", (req, res) => {
+    const title = req.body.title;
+    const content = req.body.content;
+    const newArticle = new Article({
+        title: title,
+        content: content
+    });
+    newArticle.save((err) => {
+        if(!err){
+            res.send(`Successfully added ${title}`)
         }
     });
 });
