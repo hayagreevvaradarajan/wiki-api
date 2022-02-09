@@ -68,6 +68,18 @@ app.route("/articles/:articleTitle")
             res.send(err);
         } 
     });
+})
+
+.put((req, res) => {
+    console.log(req.body.title);
+    console.log(req.body.content);
+    Article.findOneAndUpdate({title: req.params.articleTitle}, 
+        {title: req.body.title, content: req.body.content},
+        (err) => {
+        if(!err){
+            res.send("Successfully updated article");
+        }
+    });
 });
 
 const port = process.env.PORT;
