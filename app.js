@@ -54,6 +54,22 @@ app.route("/articles")
     });
 });
 
+app.route("/articles/:articleTitle")
+.get((req, res) => {
+    Article.findOne({title: req.params.articleTitle}, (err, foundArticle) => {
+        if(!err){
+            if(foundArticle != null){
+                res.send(foundArticle);
+            }
+            else{
+                res.send(`No article matching ${req.params.articleTitle} found.`);
+            }
+        } else{
+            res.send(err);
+        } 
+    });
+});
+
 const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
