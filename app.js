@@ -71,9 +71,17 @@ app.route("/articles/:articleTitle")
 })
 
 .put((req, res) => {
-    console.log(req.body.title);
-    console.log(req.body.content);
     Article.findOneAndUpdate({title: req.params.articleTitle}, 
+        {title: req.body.title, content: req.body.content},
+        (err) => {
+        if(!err){
+            res.send("Successfully updated article");
+        }
+    });
+})
+
+.patch((req, res) => {
+    Article.updateOne({title: req.params.articleTitle}, 
         {title: req.body.title, content: req.body.content},
         (err) => {
         if(!err){
