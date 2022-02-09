@@ -88,6 +88,16 @@ app.route("/articles/:articleTitle")
             res.send("Successfully updated article");
         }
     });
+})
+
+.delete((req, res) => {
+    Article.deleteOne({title: req.params.articleTitle},(err, result) => {
+        if(!err){
+            res.send(`Deleted ${req.params.articleTitle} sucessfully.`);
+        } else{
+            res.send(err);
+        }
+    });
 });
 
 const port = process.env.PORT;
