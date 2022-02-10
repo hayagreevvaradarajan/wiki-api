@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
+const { json } = require("body-parser");
 require("dotenv").config({path: __dirname + "/.env"});
 
 const app = express();
@@ -28,12 +29,16 @@ app.get("/", (req, res) => {
 
 app.route("/articles")
 .get((req, res) => {
+    const foundArticlesWithoutIDAndVersion =  [];
     Article.find({}, (err, foundArticles) => {
         if(!err){
             if(foundArticles.length > 0){
                 res.status(200);
                 res.setHeader("Content-Type", "application/json");
-                res.send(JSON.stringify({"All articles": foundArticles}));
+                foundArticles.forEach((article) => {
+                    foundArticlesWithoutIDAndVersion.push({title: article.title, content: article.content});
+                });
+                res.send(JSON.stringify({"All articles": foundArticlesWithoutIDAndVersion}));
             } else{
                 res.status(404);
                 res.setHeader("Content-Type", "application/json");
@@ -46,24 +51,35 @@ app.route("/articles")
         }
     });
 })
+
 .post((req, res) => {
     const title = req.body.title;
     const content = req.body.content;
-    const newArticle = new Article({
-        title: title,
-        content: content
-    });
-    newArticle.save((err) => {
-        if(!err){
-            res.status(201);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"message": `Successfully added ${title}`}));
-        } else{
-            res.status(500);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"error": err}));
+    if(typeof title != "undefined" && typeof content != "undefined"){
+        const newArticle = new Article({
+            title: title,
+            content: content
+        });
+        newArticle.save((err) => {
+            if(!err){
+                res.status(201);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"message": `Successfully added ${title}`}));
+            } else{
+                res.status(500);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"error": err}));
+            }
+        });
+    } else{
+        res.status(400);
+        res.setHeader("Content-Type", "application/json");
+        if(typeof title === "undefined"){
+            res.send(JSON.stringify({"error": "title missing from request body"}));
+        } else if(typeof content === "undefined"){
+            res.send(JSON.stringify({"error": "content missing from request body"}));
         }
-    });
+    }
 })
 .delete((req, res) => {
     Article.deleteMany((err) => {
@@ -85,7 +101,8 @@ app.route("/articles/:articleTitle")
         if(!err){
             if(foundArticle != null){
                 res.status(200);
-                res.send(foundArticle);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"requested article": {title: foundArticle.title, content: foundArticle.content}}));
             }
             else{
                 res.status(404);

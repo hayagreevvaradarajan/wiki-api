@@ -9,26 +9,50 @@ Server endpoint: https://hayagreev-wiki-api.herokuapp.com
 GET: 
     Returns all the articles present in the database
     Status codes: 200, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
     Response header: content-type: application/json
     Required Request payload: None
     Sample response: 
         200: {
                 "All articles": [
                     {
-                        "_id": "5c18e1892998bdb3b3d355bf",
                         "title": "REST",
                         "content": "REST is short for REpresentational State Transfer. IIt's an architectural style for designing APIs."
                         },
                     {
-                        "_id": "5c139771d79ac8eac11e754a",
                         "title": "API",
                         "content": "API stands for Application Programming Interface. It is a set of subroutine definitions, communication protocols, and tools for building software. In general terms, it is a set of clearly defined methods of communication among various components. A good API makes it easier to develop a computer program by providing all the building blocks, which are then put together by the programmer."
                     }
                 ]
              }, 
-             
+
         404: {
                 "message": "No Articles found"
              }
+
+POST: 
+    Creates a new article with the given title and content
+    Status codes: 201, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: None
+    Sample response: 
+        201: {
+                "All articles": [
+                    {
+                        "title": "REST",
+                        "content": "REST is short for REpresentational State Transfer. IIt's an architectural style for designing APIs."
+                        },
+                    {
+                        "title": "API",
+                        "content": "API stands for Application Programming Interface. It is a set of subroutine definitions, communication protocols, and tools for building software. In general terms, it is a set of clearly defined methods of communication among various components. A good API makes it easier to develop a computer program by providing all the building blocks, which are then put together by the programmer."
+                    }
+                ]
+             }, 
+
+        404: {
+                "message": "No Articles found"
+             }
+
 ```
 # articles/{specific-article-title}
