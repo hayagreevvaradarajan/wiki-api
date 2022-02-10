@@ -4,7 +4,6 @@ This is a Wikipedia like RESTful API. I have built this out as a project while l
 # Documentation
 Server endpoint: https://hayagreev-wiki-api.herokuapp.com
 
-Paths:
 # /articles
 ```
 GET: 
