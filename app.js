@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const ejs = require("ejs");
-require('dotenv').config({path: __dirname + '/.env'});
+require("dotenv").config({path: __dirname + "/.env"});
 
 const app = express();
 
@@ -30,9 +30,13 @@ app.route("/articles")
 .get((req, res) => {
     Article.find({}, (err, foundArticles) => {
         if(!err){
-            res.send(foundArticles);
+            res.status(200);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"All articles": foundArticles}));
         } else{
-            res.send(err);
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 })
@@ -45,16 +49,26 @@ app.route("/articles")
     });
     newArticle.save((err) => {
         if(!err){
-            res.send(`Successfully added ${title}`)
+            res.status(201);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"message": `Successfully added ${title}`}));
+        } else{
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 })
 .delete((req, res) => {
     Article.deleteMany((err) => {
         if(!err){
-            res.send("Deleted all articles successfully");
+            res.send(200);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"message": "Deleted all articles successfully"}));
         } else{
-            res.send(err);
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 });
@@ -64,14 +78,19 @@ app.route("/articles/:articleTitle")
     Article.findOne({title: req.params.articleTitle}, (err, foundArticle) => {
         if(!err){
             if(foundArticle != null){
+                res.status(200);
                 res.send(foundArticle);
             }
             else{
-                res.send(`No article matching ${req.params.articleTitle} found.`);
+                res.status(404);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"message": `No article matching ${req.params.articleTitle} found.`}));
             }
         } else{
-            res.send(err);
-        } 
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
+        }
     });
 })
 
@@ -80,7 +99,13 @@ app.route("/articles/:articleTitle")
         {title: req.body.title, content: req.body.content},
         (err) => {
         if(!err){
-            res.send("Successfully updated article");
+            res.status(200);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"message": "Successfully updated article"}));
+        } else{
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 })
@@ -90,7 +115,13 @@ app.route("/articles/:articleTitle")
         {title: req.body.title, content: req.body.content},
         (err) => {
         if(!err){
-            res.send("Successfully updated article");
+            res.status(200);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"message": "Successfully updated article"}));
+        } else{
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 })
@@ -98,9 +129,13 @@ app.route("/articles/:articleTitle")
 .delete((req, res) => {
     Article.deleteOne({title: req.params.articleTitle},(err, result) => {
         if(!err){
-            res.send(`Deleted ${req.params.articleTitle} sucessfully.`);
+            res.status(200);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"message": `Deleted ${req.params.articleTitle} sucessfully.`}));
         } else{
-            res.send(err);
+            res.status(500);
+            res.setHeader("Content-Type", "application/json");
+            res.send(JSON.stringify({"error": err}));
         }
     });
 });
