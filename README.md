@@ -6,6 +6,7 @@ Server endpoint: https://hayagreev-wiki-api.herokuapp.com
 
 Paths:
 # /articles
+```
 GET: 
     Returns all the articles present in the database
     Status code: 200
@@ -26,5 +27,5 @@ GET:
                 }
             ]
         }
-
+```
 # articles/{specific-article-title}
