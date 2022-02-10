@@ -45,5 +45,16 @@ POST:
                 "error": "content missing from request body"
              }
 
+DELETE: 
+    Deletes all the articles
+    Status codes: 201, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: None
+    Sample response: 
+        201: {
+                "message": "Deleted all articles successfully"
+             }
+
 ```
 # articles/{specific-article-title}
