@@ -23,16 +23,22 @@ const articleSchema = {
 const Article = mongoose.model("Article", articleSchema);
 
 app.get("/", (req, res) => {
-    res.redirect("https://github.com/hayagreevvaradarajan/wiki-api/");
+    res.redirect("https://github.com/hayagreevvaradarajan/wiki-api/#readme");
 });
 
 app.route("/articles")
 .get((req, res) => {
     Article.find({}, (err, foundArticles) => {
         if(!err){
-            res.status(200);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"All articles": foundArticles}));
+            if(foundArticles.length > 0){
+                res.status(200);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"All articles": foundArticles}));
+            } else{
+                res.status(404);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"message": "No Articles found"}));
+            }
         } else{
             res.status(500);
             res.setHeader("Content-Type", "application/json");
@@ -62,7 +68,7 @@ app.route("/articles")
 .delete((req, res) => {
     Article.deleteMany((err) => {
         if(!err){
-            res.send(200);
+            res.status(201);
             res.setHeader("Content-Type", "application/json");
             res.send(JSON.stringify({"message": "Deleted all articles successfully"}));
         } else{
