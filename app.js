@@ -22,6 +22,10 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
+app.get("/", (req, res) => {
+    res.redirect("https://github.com/hayagreevvaradarajan/wiki-api/");
+});
+
 app.route("/articles")
 .get((req, res) => {
     Article.find({}, (err, foundArticles) => {
