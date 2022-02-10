@@ -1,5 +1,5 @@
 # wiki-api
-This is a Wikipedia like RESTful API. I have built this out as a project while learning Node.js from Angela Yu's development bootcamp. I watch her lectures, try to understand them and build out the functionality on my own. If I get stuck somewhere, I try to figure it out on my own and if I'm not able to figure it out, I re-watch the lecture to figure it out. I have also added a few functionality of my own such as status codes, response headers etc.,
+This is a Wikipedia like RESTful API. I have built this out as a project while learning Node.js from Angela Yu's development bootcamp. I watch her lectures, try to understand them and build out the functionality on my own. If I get stuck somewhere, I try to figure it out on my own and if I'm not able to figure it out, I re-watch the lecture to figure it out. I have also added a few functionality of my own such as status codes, response headers etc., and have followed the RESTful API conventions to handle request and send responses.
 
 # Documentation
 Server endpoint: https://hayagreev-wiki-api.herokuapp.com
@@ -32,26 +32,17 @@ GET:
 
 POST: 
     Creates a new article with the given title and content
-    Status codes: 201, 404, 500
+    Status codes: 201, 400, 500
     Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
     Response header: content-type: application/json
-    Required Request payload: None
+    Required Request payload: title, content
     Sample response: 
         201: {
-                "All articles": [
-                    {
-                        "title": "REST",
-                        "content": "REST is short for REpresentational State Transfer. IIt's an architectural style for designing APIs."
-                        },
-                    {
-                        "title": "API",
-                        "content": "API stands for Application Programming Interface. It is a set of subroutine definitions, communication protocols, and tools for building software. In general terms, it is a set of clearly defined methods of communication among various components. A good API makes it easier to develop a computer program by providing all the building blocks, which are then put together by the programmer."
-                    }
-                ]
-             }, 
+                "message": "Successfully added API"
+             }
 
-        404: {
-                "message": "No Articles found"
+        400: {
+                "error": "content missing from request body"
              }
 
 ```
