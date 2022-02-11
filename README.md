@@ -39,7 +39,7 @@ POST:
     Sample response: 
         201: {
                 "message": "Successfully added API."
-             }
+             },
 
         400: {
                 "error": "content missing from request body."
