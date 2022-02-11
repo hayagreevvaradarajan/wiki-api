@@ -57,4 +57,26 @@ DELETE:
              }
 
 ```
-# articles/{specific-article-title}
+
+# /articles/{specific-article-title}
+```
+GET: 
+    Returns an article matching the article title passed in the request parameter
+    Status codes: 200, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: None
+    Sample response: 
+        200: {
+                "requested article": {
+                    "title": "REST",
+                    "content": "REST is short for REpresentational State Transfer. It's an architectural style for designing APIs."
+                }
+             }, 
+
+        404: {
+                "message": "No article matching mongoose found."
+             }
+
+
+```
