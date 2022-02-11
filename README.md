@@ -31,18 +31,18 @@ GET:
              }
 
 POST: 
-    Creates a new article with the given title and content
+    Creates a new article with the given title and content in the request payload
     Status codes: 201, 400, 500
     Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
     Response header: content-type: application/json
     Required Request payload: title, content
     Sample response: 
         201: {
-                "message": "Successfully added API"
+                "message": "Successfully added API."
              }
 
         400: {
-                "error": "content missing from request body"
+                "error": "content missing from request body."
              }
 
 DELETE: 
@@ -53,7 +53,7 @@ DELETE:
     Required Request payload: None
     Sample response: 
         201: {
-                "message": "Deleted all articles successfully"
+                "message": "Deleted all articles successfully."
              }
 
 ```
@@ -76,6 +76,25 @@ GET:
 
         404: {
                 "message": "No article matching mongoose found."
+             }
+
+PUT: 
+    Edits the article with the given title and content in the request payload. If only title is passed in the request payload, the content field will be removed from the document. Liekwise for content.
+    Status codes: 200, 400, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: title, content
+    Sample response: 
+        200: {
+                "message": "Successfully updated article."
+             },
+
+        400: {
+                "error": "The request body should not be empty."
+             },
+            
+        404: {
+                "message": "No article matching REST found."
              }
 
 
