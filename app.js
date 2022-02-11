@@ -170,9 +170,15 @@ app.route("/articles/:articleTitle")
 .delete((req, res) => {
     Article.deleteOne({title: req.params.articleTitle},(err, result) => {
         if(!err){
-            res.status(200);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"message": `Deleted ${req.params.articleTitle} sucessfully.`}));
+            if(result.deletedCount > 0){
+                res.status(200);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"message": `Deleted ${req.params.articleTitle} sucessfully.`}));
+            } else{
+                res.status(404);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"message": `No article matching ${req.params.articleTitle} found.`}));
+            }
         } else{
             res.status(500);
             res.setHeader("Content-Type", "application/json");
