@@ -47,12 +47,12 @@ POST:
 
 DELETE: 
     Deletes all the articles
-    Status codes: 201, 500
+    Status codes: 200, 500
     Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
     Response header: content-type: application/json
     Required Request payload: None
     Sample response: 
-        201: {
+        200: {
                 "message": "Deleted all articles successfully."
              }
 
@@ -113,5 +113,20 @@ PATCH:
             
         404: {
                 "message": "No article matching DOM found."
+             }
+
+DELETE: 
+    Deletes the article corresponding to the requested title
+    Status codes: 200, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: None
+    Sample response: 
+        200: {
+                "message": "Deleted API sucessfully."
+             },
+        
+        404: {
+                "error": "No article matching REST found."
              }
 ```
