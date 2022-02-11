@@ -192,7 +192,7 @@ app.route("/articles/:articleTitle")
             } else{
                 res.status(404);
                 res.setHeader("Content-Type", "application/json");
-                res.send(JSON.stringify({"message": `No article matching ${req.params.articleTitle} found.`}));
+                res.send(JSON.stringify({"error": `No article matching ${req.params.articleTitle} found.`}));
             }
         } else{
             res.status(500);
