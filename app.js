@@ -86,7 +86,7 @@ app.route("/articles")
 .delete((req, res) => {
     Article.deleteMany((err) => {
         if(!err){
-            res.status(201);
+            res.status(200);
             res.setHeader("Content-Type", "application/json");
             res.send(JSON.stringify({"message": "Deleted all articles successfully."}));
         } else{
