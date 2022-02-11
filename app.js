@@ -43,7 +43,7 @@ app.route("/articles")
             } else{
                 res.status(404);
                 res.setHeader("Content-Type", "application/json");
-                res.send(JSON.stringify({"message": "No Articles found"}));
+                res.send(JSON.stringify({"message": "No Articles found."}));
             }
         } else{
             res.status(500);
@@ -65,7 +65,7 @@ app.route("/articles")
             if(!err){
                 res.status(201);
                 res.setHeader("Content-Type", "application/json");
-                res.send(JSON.stringify({"message": `Successfully added ${title}`}));
+                res.send(JSON.stringify({"message": `Successfully added ${title}.`}));
             } else{
                 res.status(500);
                 res.setHeader("Content-Type", "application/json");
@@ -76,9 +76,9 @@ app.route("/articles")
         res.status(400);
         res.setHeader("Content-Type", "application/json");
         if(typeof title === "undefined"){
-            res.send(JSON.stringify({"error": "title missing from request body"}));
+            res.send(JSON.stringify({"error": "title missing from request body."}));
         } else if(typeof content === "undefined"){
-            res.send(JSON.stringify({"error": "content missing from request body"}));
+            res.send(JSON.stringify({"error": "content missing from request body."}));
         }
     }
 })
@@ -88,7 +88,7 @@ app.route("/articles")
         if(!err){
             res.status(201);
             res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"message": "Deleted all articles successfully"}));
+            res.send(JSON.stringify({"message": "Deleted all articles successfully."}));
         } else{
             res.status(500);
             res.setHeader("Content-Type", "application/json");
@@ -126,7 +126,7 @@ app.route("/articles/:articleTitle")
     if(newTitle === undefined && newContent === undefined){
         res.status(400);
         res.setHeader("Content-Type", "application/json");
-        res.send(JSON.stringify({"message": "The request body should not be empty."}));
+        res.send(JSON.stringify({"error": "The request body should not be empty."}));
     } else{
         Article.findOneAndUpdate({title: req.params.articleTitle}, 
             {title: newTitle, content: newContent},
@@ -135,7 +135,7 @@ app.route("/articles/:articleTitle")
                 if(foundArticle != null){
                     res.status(200);
                     res.setHeader("Content-Type", "application/json");
-                    res.send(JSON.stringify({"message": "Successfully updated article"}));
+                    res.send(JSON.stringify({"message": "Successfully updated article."}));
                 }
                 else{
                     res.status(404);
@@ -158,7 +158,7 @@ app.route("/articles/:articleTitle")
         if(!err){
             res.status(200);
             res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"message": "Successfully updated article"}));
+            res.send(JSON.stringify({"message": "Successfully updated article."}));
         } else{
             res.status(500);
             res.setHeader("Content-Type", "application/json");
