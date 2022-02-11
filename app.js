@@ -121,19 +121,34 @@ app.route("/articles/:articleTitle")
 })
 
 .put((req, res) => {
-    Article.findOneAndUpdate({title: req.params.articleTitle}, 
-        {title: req.body.title, content: req.body.content},
-        (err) => {
-        if(!err){
-            res.status(200);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"message": "Successfully updated article"}));
-        } else{
-            res.status(500);
-            res.setHeader("Content-Type", "application/json");
-            res.send(JSON.stringify({"error": err}));
-        }
-    });
+    const newTitle = req.body.title;
+    const newContent = req.body.content;
+    if(newTitle === undefined && newContent === undefined){
+        res.status(400);
+        res.setHeader("Content-Type", "application/json");
+        res.send(JSON.stringify({"message": "The request body should not be empty."}));
+    } else{
+        Article.findOneAndUpdate({title: req.params.articleTitle}, 
+            {title: newTitle, content: newContent},
+            (err, foundArticle) => {
+            if(!err){
+                if(foundArticle != null){
+                    res.status(200);
+                    res.setHeader("Content-Type", "application/json");
+                    res.send(JSON.stringify({"message": "Successfully updated article"}));
+                }
+                else{
+                    res.status(404);
+                    res.setHeader("Content-Type", "application/json");
+                    res.send(JSON.stringify({"message": `No article matching ${req.params.articleTitle} found.`}));
+                }
+            } else{
+                res.status(500);
+                res.setHeader("Content-Type", "application/json");
+                res.send(JSON.stringify({"error": err}));
+            }
+        });
+    }   
 })
 
 .patch((req, res) => {
