@@ -4,6 +4,8 @@ This is a Wikipedia like RESTful API. I have built this out as a project while l
 # Documentation
 Server endpoint: https://hayagreev-wiki-api.herokuapp.com
 
+# /
+The home route will take you to the README page of this application in my github repo.
 # /articles
 ```
 GET: 
