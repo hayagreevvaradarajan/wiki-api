@@ -79,7 +79,7 @@ GET:
              }
 
 PUT: 
-    Edits the article with the given title and content in the request payload. If only title is passed in the request payload, the content field will be removed from the document. Liekwise for content.
+    Updates the article with the given title and content in the request payload. If only title is passed in the request payload, the content field will be removed from the document. Liekwise for content.
     Status codes: 200, 400, 404, 500
     Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
     Response header: content-type: application/json
@@ -96,6 +96,22 @@ PUT:
         404: {
                 "message": "No article matching REST found."
              }
+PATCH: 
+    Updates the article with the given title and content in the request payload. If only title is passed in the request payload, the content field will be untouched. Only the title field will be updated. Liekwise for content.
+    Status codes: 200, 400, 404, 500
+    Accepted request headers: content-type: application/json or application/x-www-form-urlencoded
+    Response header: content-type: application/json
+    Required Request payload: title(optional), content(optional) but both cannot be empty
+    Sample response: 
+        200: {
+                "message": "Successfully updated article."
+             },
 
-
+        400: {
+                "error": "The request body should not be empty."
+             },
+            
+        404: {
+                "message": "No article matching DOM found."
+             }
 ```
